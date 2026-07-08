@@ -94,8 +94,15 @@ export default function MapView({ records, onSelectRecord }) {
       let color = '#64748b';
       if (colorMode === 'crop') {
         color = CROP_COLORS[r.crop.type] || '#64748b';
-      } else {
+      } else if (colorMode === 'status') {
         color = STATUS_COLORS[r.workflow.status] || '#f59e0b';
+      } else if (colorMode === 'drought') {
+        const lowRisk = ['ห้วยราช', 'สามประเอิก', 'โคกเหล็ก'];
+        if (lowRisk.includes(r.location?.tambon)) {
+          color = '#06b6d4'; // Cyan (ชลประทาน/เสี่ยงแล้งต่ำ)
+        } else {
+          color = '#ef4444'; // Red (นอกเขตชลประทาน/เสี่ยงแล้งสูง)
+        }
       }
 
       // Calculate radius based on area (Rai)
@@ -204,6 +211,15 @@ export default function MapView({ records, onSelectRecord }) {
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>สีตามสถานะ</span>
             </button>
+            <button
+              onClick={() => setColorMode('drought')}
+              className={`px-2.5 py-1 rounded-lg text-xs font-medium flex items-center gap-1 transition-all ${
+                colorMode === 'drought' ? 'bg-gradient-to-r from-amber-500 to-red-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <AlertTriangle className="w-3.5 h-3.5 text-amber-300" />
+              <span>โซนเสี่ยงภัยแล้ง/ชลประทาน</span>
+            </button>
           </div>
 
           {/* Base Layer Switcher */}
@@ -248,7 +264,7 @@ export default function MapView({ records, onSelectRecord }) {
         <div className="absolute bottom-3 left-3 z-10 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 rounded-xl p-2.5 text-[11px] text-slate-300 shadow-xl max-w-xs">
           <div className="font-semibold text-slate-200 mb-1.5 flex items-center gap-1">
             <Layers className="w-3 h-3 text-teal-400" />
-            <span>สัญลักษณ์ ({colorMode === 'crop' ? 'ชนิดพืช' : 'สถานะการประชาคม'})</span>
+            <span>สัญลักษณ์ ({colorMode === 'crop' ? 'ชนิดพืช' : colorMode === 'status' ? 'สถานะการประชาคม' : 'โซนเสี่ยงภัยแล้ง/ชลประทาน'})</span>
           </div>
           <div className="grid grid-cols-2 gap-x-3 gap-y-1">
             {colorMode === 'crop' ? (
@@ -258,13 +274,24 @@ export default function MapView({ records, onSelectRecord }) {
                   <span className="truncate">{name}</span>
                 </div>
               ))
-            ) : (
+            ) : colorMode === 'status' ? (
               Object.entries(STATUS_COLORS).map(([name, color]) => (
                 <div key={name} className="flex items-center gap-1.5 truncate">
                   <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: color }}></span>
                   <span className="truncate">{name}</span>
                 </div>
               ))
+            ) : (
+              <>
+                <div className="flex items-center gap-1.5 truncate col-span-2">
+                  <span className="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-[#06b6d4]"></span>
+                  <span className="truncate text-cyan-300 font-medium">ในเขตชลประทาน (เสี่ยงต่ำ)</span>
+                </div>
+                <div className="flex items-center gap-1.5 truncate col-span-2">
+                  <span className="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-[#ef4444]"></span>
+                  <span className="truncate text-red-300 font-medium">นอกเขตชลประทาน (เสี่ยงแล้งสูง)</span>
+                </div>
+              </>
             )}
           </div>
         </div>

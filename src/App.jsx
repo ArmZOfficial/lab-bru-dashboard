@@ -12,6 +12,7 @@ import PlantingCalendarChart from './components/charts/PlantingCalendarChart';
 import MapView from './components/MapView';
 import DataTable from './components/DataTable';
 import DetailModal from './components/DetailModal';
+import DataAuditModal from './components/DataAuditModal';
 import { Sprout, Loader2, BarChart2, Map, Table as TableIcon, LayoutDashboard } from 'lucide-react';
 
 const INITIAL_FILTERS = {
@@ -33,6 +34,7 @@ export default function App() {
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard', 'map', 'table'
+  const [showAuditModal, setShowAuditModal] = useState(false);
 
   // Load pre-processed JSON data on start
   useEffect(() => {
@@ -238,6 +240,7 @@ export default function App() {
             records={filteredRecords}
             selectedYear={filters.year}
             allRecords={allRecords}
+            onOpenAudit={() => setShowAuditModal(true)}
           />
 
           {/* Tab Content 1: Dashboard Charts */}
@@ -299,6 +302,14 @@ export default function App() {
 
       {/* Detail Slide-over Modal */}
       <DetailModal record={selectedRecord} onClose={() => setSelectedRecord(null)} />
+
+      {/* Data Anomaly & Audit Modal */}
+      <DataAuditModal
+        isOpen={showAuditModal}
+        onClose={() => setShowAuditModal(false)}
+        records={allRecords}
+        onSelectRecord={(rec) => setSelectedRecord(rec)}
+      />
     </div>
   );
 }

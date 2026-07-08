@@ -507,6 +507,110 @@
           </div>
         </div>
 
+      <!-- THIRD ANALYTICS & FORECASTING BENTO ROW -->
+      <section id="section-analytics-extra" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Conversion Funnel & Yield Simulator (Left 2 Columns) -->
+        <div class="bento-card p-6 lg:p-7 lg:col-span-2 flex flex-col justify-between">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+            <div>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 uppercase tracking-wider">
+                Admission Conversion Funnel
+              </span>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-1">ท่อการคัดเลือก & จำลองอัตรายืนยันสิทธิ์เข้าเรียนจริง (Yield Rate)</h3>
+            </div>
+            <div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-xl">
+              <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">อัตรา Clearing House:</span>
+              <select id="sim-yield-rate" onchange="updateFunnelSim()" class="bg-transparent text-xs font-bold text-purple-600 dark:text-purple-400 focus:outline-none cursor-pointer">
+                <option value="0.70">70% (เกณฑ์ขั้นต่ำ)</option>
+                <option value="0.75" selected>75% (ค่าเฉลี่ยมหาวิทยาลัย)</option>
+                <option value="0.85">85% (เป้าหมายสูงสุด)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Funnel Visual Steps -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
+            <!-- Step 1: Applicants -->
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60 relative">
+              <div class="flex items-center justify-between text-xs text-slate-400 font-medium mb-1">
+                <span>1. ยอดผู้สมัครรวม</span>
+                <span class="font-bold text-slate-600 dark:text-slate-300">100%</span>
+              </div>
+              <div class="text-2xl font-extrabold text-slate-800 dark:text-white" id="funnel-step-1">25,199 คน</div>
+              <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full mt-3 overflow-hidden">
+                <div class="bg-slate-700 dark:bg-slate-300 h-full w-full"></div>
+              </div>
+            </div>
+
+            <!-- Step 2: Passed -->
+            <div class="p-4 rounded-2xl bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800/50 relative">
+              <div class="flex items-center justify-between text-xs text-purple-600 dark:text-purple-400 font-medium mb-1">
+                <span>2. สอบผ่านการคัดเลือก</span>
+                <span class="font-bold" id="funnel-pct-2">39.6%</span>
+              </div>
+              <div class="text-2xl font-extrabold text-purple-700 dark:text-purple-300" id="funnel-step-2">9,977 คน</div>
+              <div class="w-full bg-purple-200 dark:bg-purple-950 h-2 rounded-full mt-3 overflow-hidden">
+                <div class="bg-purple-600 dark:bg-purple-500 h-full" id="funnel-bar-2" style="width: 39.6%"></div>
+              </div>
+            </div>
+
+            <!-- Step 3: Enrolled (Simulated Yield) -->
+            <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/50 relative shadow-sm">
+              <div class="flex items-center justify-between text-xs text-emerald-600 dark:text-emerald-400 font-medium mb-1">
+                <span>3. ยืนยันสิทธิ์เข้าเรียนจริง</span>
+                <span class="font-bold text-emerald-600 dark:text-emerald-400" id="funnel-pct-3">29.7%</span>
+              </div>
+              <div class="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300" id="funnel-step-3">7,483 คน</div>
+              <div class="w-full bg-emerald-200 dark:bg-emerald-950 h-2 rounded-full mt-3 overflow-hidden">
+                <div class="bg-emerald-500 h-full transition-all duration-500" id="funnel-bar-3" style="width: 29.7%"></div>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-[11px] text-slate-400 pt-2 border-t border-slate-100 dark:border-slate-800">
+            💡 *อัตรายืนยันสิทธิ์เข้าเรียนจริง (Yield Rate) คำนวณจำลองจากจำนวนผู้ผ่านการคัดเลือก ช่วยให้คณะวางแผนเรียกสำรองได้อย่างแม่นยำ ไม่ให้ที่นั่งว่าง
+          </p>
+        </div>
+
+        <!-- AI Predictive Forecasting (Right 1 Column) -->
+        <div class="bento-card p-6 lg:p-7 flex flex-col justify-between bg-gradient-to-br from-slate-900 to-indigo-950 text-white border border-indigo-500/30">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 flex items-center gap-1">
+                🤖 AI Predictive Forecast
+              </span>
+              <span class="text-xs text-indigo-300 font-semibold">คาดการณ์ 2 ปีข้างหน้า</span>
+            </div>
+            <h3 class="text-lg font-bold text-white">แนวโน้มยอดผู้สมัคร มรภ.บุรีรัมย์</h3>
+            <p class="text-xs text-indigo-200 mt-1 leading-relaxed">
+              วิเคราะห์แนวโน้มการเติบโตด้วยโมเดลสถิติเชิงเส้น (Linear Trendline) เพื่อวางแผนงบประมาณและกรอบอัตรากำลังอาจารย์
+            </p>
+          </div>
+
+          <div class="space-y-3 my-4">
+            <div class="p-3.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-indigo-200 block">ปีการศึกษา 2568 (คาดการณ์)</span>
+                <span class="text-xl font-extrabold text-amber-300">~7,850 คน</span>
+              </div>
+              <span class="text-xs font-bold text-emerald-400 bg-emerald-500/20 px-2 py-1 rounded-lg">▲ +4.5%</span>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-indigo-200 block">ปีการศึกษา 2569 (คาดการณ์)</span>
+                <span class="text-xl font-extrabold text-emerald-300">~8,210 คน</span>
+              </div>
+              <span class="text-xs font-bold text-emerald-400 bg-emerald-500/20 px-2 py-1 rounded-lg">▲ +4.6%</span>
+            </div>
+          </div>
+
+          <div class="text-[11px] text-indigo-300/80 pt-2 border-t border-white/10">
+            * คาดการณ์จากอัตราเติบโตเฉลี่ย 4 ปีย้อนหลัง (CAGR) โดยอิงความนิยมในคณะสาธารณสุขและครุศาสตร์
+          </div>
+        </div>
+
       </section>
 
       <!-- ACTIVITY / DATA TABLE BENTO CARD (Inspired by UI8 "Current Tasks") -->
@@ -755,6 +859,7 @@
       document.getElementById('table-badge-count').textContent = `${filteredRecords.length} รายการ`;
 
       updateKPIs();
+      updateFunnelSim();
       updateCharts();
       renderTable();
     }
@@ -795,6 +900,30 @@
         document.getElementById('bento-kpi-top-fac').textContent = '-';
       }
       document.getElementById('bento-kpi-failed-count').textContent = `${totalFail.toLocaleString()} คน`;
+    }
+
+    // Update Funnel Simulation
+    function updateFunnelSim() {
+      const totalApp = filteredRecords.reduce((sum, r) => sum + r.applicants, 0);
+      const totalPass = filteredRecords.reduce((sum, r) => sum + r.passed, 0);
+      const passRate = totalApp > 0 ? ((totalPass / totalApp) * 100) : 0;
+      
+      const yieldRateSelect = document.getElementById('sim-yield-rate');
+      const yieldRate = yieldRateSelect ? parseFloat(yieldRateSelect.value) : 0.75;
+      const simulatedEnrolled = Math.round(totalPass * yieldRate);
+      const enrolledRate = totalApp > 0 ? ((simulatedEnrolled / totalApp) * 100) : 0;
+
+      const step1El = document.getElementById('funnel-step-1');
+      if (step1El) {
+        step1El.textContent = `${totalApp.toLocaleString()} คน`;
+        document.getElementById('funnel-step-2').textContent = `${totalPass.toLocaleString()} คน`;
+        document.getElementById('funnel-pct-2').textContent = `${passRate.toFixed(1)}%`;
+        document.getElementById('funnel-bar-2').style.width = `${Math.min(100, passRate)}%`;
+
+        document.getElementById('funnel-step-3').textContent = `${simulatedEnrolled.toLocaleString()} คน`;
+        document.getElementById('funnel-pct-3').textContent = `${enrolledRate.toFixed(1)}%`;
+        document.getElementById('funnel-bar-3').style.width = `${Math.min(100, enrolledRate)}%`;
+      }
     }
 
     // 7. Update Chart.js Charts (With Dribbble / UI8 Bezier Aesthetics)
