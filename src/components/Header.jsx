@@ -62,6 +62,14 @@ export default function Header({
 
         {/* Actions */}
         <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto justify-end">
+          <a
+            href="/bru-admission-dashboard.html"
+            className="px-3.5 py-1.5 text-xs font-bold rounded-lg bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-500 hover:to-indigo-600 text-white border border-purple-400/40 flex items-center gap-1.5 transition-all shadow-md shadow-purple-900/30 no-underline cursor-pointer"
+            title="ไปยังระบบวิเคราะห์ข้อมูลการสมัครเรียน มรภ.บุรีรัมย์"
+          >
+            <span>🏛️ แดชบอร์ดสมัครเรียน มรภ.บุรีรัมย์</span>
+          </a>
+
           {hasActiveFilters && (
             <button
               onClick={onResetFilters}
